@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-// 开发环境要不要提示
+import "velocity-animate"
+import "animate.css"
+
 Vue.config.productionTip = false
 
 new Vue({

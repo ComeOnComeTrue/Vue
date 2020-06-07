@@ -1,44 +1,36 @@
 <template>
   <div id="app">
+    <button @click="show = !show">click</button>
 
-    <base-level :level="2" @click="handleClick">
+    <!-- <transition-single>
+      <div v-if="show">hello world</div>
+    </transition-single>
+    <transition-single>
+      <div v-if="show">hello shanshan</div>
+    </transition-single> -->
 
-      <!-- <template #default>
-        标题 
-      </template>
-      <template #header>
-        标题 
-      </template>
-      <div>div</div>
-      <p>p</p> -->
-
-      <template v-slot:header>
-        <a>first</a>
-      </template>
-      <div>div</div>
-      
-
-    </base-level>
-
+    <transition-single>
+      <div key="world" v-if="show">hello shanshan</div>
+      <div key="shanshan" v-else>hello world</div>
+    </transition-single>
   </div>
 </template>
 
 <script>
-import baseLevel from './components/baseLevel';
+import transitionSingle from "./components/js列表过渡";
+
 export default {
-  name: 'app',
-  provide () {
-    return {
-      name: 'shanshan',
-    }
-  },
+  name: "App",
   components: {
-    baseLevel,
+    transitionSingle
   },
-  methods: {
-    handleClick () {
-      console.log('xxxx');
-    }
-  },
-}
+  data() {
+    return {
+      show: true
+    };
+  }
+};
 </script>
+
+<style>
+</style>
