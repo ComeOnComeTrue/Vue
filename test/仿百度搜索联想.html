@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/Vue.js"></script>
+    <script src="./js/jquery.js"></script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        /* 引入字体样式 */
+        @font-face {
+            font-family: 'iconfont';
+            /* project id 1511900 */
+            src: url('./font/iconfont.eot');
+            src: url('./font/iconfont.eot?#iefix') format('embedded-opentype'),
+                url('./font/iconfont.woff2') format('woff2'),
+                url('./font/iconfont.woff') format('woff'),
+                url('./font/iconfont') format('truetype'),
+                url('./font/iconfont.svg#iconfont') format('svg');
+        }
+
+        .icon {
+            font-family: 'iconfont' !important;
+        }
+
+        .icon-paizhao:before {
+            content: "\e66f";
+        }
+
+        #app {
+            width: 638px;
+            margin: 100px auto;
+        }
+
+        .logo {
+            width: 270px;
+            height: 129px;
+            margin: 0 auto;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .search-box {
+            display: flex;
+            margin-top: 40px;
+        }
+
+        .search-area {
+            position: relative;
+            display: inline-block;
+            width: 536px;
+            height: 40px;
+            line-height: 40px;
+        }
+
+        .search-area input {
+            width: 480px;
+            height: 20px;
+            padding: 9px 48px 9px 7px;
+            font-size: 16px;
+            border: 1px solid #b8b8b8;
+            border-bottom: 1px solid #ccc;
+            vertical-align: top;
+            border-right: none;
+            outline: none;
+        }
+
+        .search-area input:focus {
+            border-color: #38f;
+            /* border-bottom-color: transparent; */
+        }
+
+        .search-area .icon-paizhao {
+            position: absolute;
+            top: 50%;
+            margin-top: -8px;
+            right: 11px;
+            font-size: 22px;
+            line-height: 16px;
+            cursor: pointer;
+        }
+
+        .search-btn {
+            width: 102px;
+            height: 40px;
+            line-height: 40px;
+            background-color: #38f;
+            color: #fff;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .search-btn:hover {
+            height: 39px;
+            background-color: #317ef3;
+            border-bottom: 1px solid #2868c8;
+            box-shadow: 1px 1px 1px #ccc;
+        }
+
+        .search-list {
+            position: relative;
+            top: -1px;
+            width: 535px;
+            border: 1px solid #ccc;
+            padding-top: 1px;
+            box-shadow: 1px 1px 3px #ededed;
+            z-index: 1;
+        }
+
+        .search-list li {
+            width: 519px;
+            height: 22px;
+            line-height: 22px;
+            padding-left: 8px;
+            padding-right: 8px;
+            font-size: 14px;
+            cursor: default;
+        }
+
+        .search-list li:hover {
+            background-color: #f0f0f0;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="logo">
+            <img src="https://www.baidu.com/img/bd_logo1.png?where=super" title="点击一下，了解更多">
+        </div>
+
+        <div class="search-box">
+            <span class="search-area">
+                <!-- focus, blur聚焦和失焦事件  -->
+                <input type="text" maxlength="80" v-model="inputVal" @focus="() => inputFocus = true"
+                    @blur="() => inputFocus = false">
+                <span class="icon icon-paizhao">paizhao</span>
+            </span>
+            <span class="search-btn">百度一下</span>
+        </div>
+
+        <ul class="search-list" v-show="inputFocus && searchResList.length">
+            <!-- 聚焦显示 失焦隐藏  为true并且有值 -->
+            <li v-for="res in searchResList" :key="res">
+                {{ res }}
+            </li>
+        </ul>
+    </div>
+
+    <script>
+
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                inputFocus: false, // 控制input的列表显示与隐藏
+                inputVal: '', //双向数据绑定 输入值
+                searchResList: [] // 导航成功之后的列表，遍历
+            },
+            methods: {
+                searchRes(res) { // res 返回的数据
+                    // console.log(res);
+                    this.searchResList = res.s;
+                }
+            },
+            watch: { // 侦听 一个数据改变 操作多个数据
+                inputVal() {
+                    $.ajax({
+                        dataType: 'jsonp',
+                        url: 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',
+                        data: {
+                            wd: this.inputVal, // 输入值
+                            cb: 'vm.searchRes' // cb去全局找 回调函数名
+                        }
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

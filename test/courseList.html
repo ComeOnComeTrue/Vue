@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        html, body{
+            width: 100%;
+            height: 100%;
+        }
+        #app {
+            width: 100%;
+            height: 100%;
+        }
+        #app .list{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .list .course{
+            box-sizing: border-box;
+            width: 22%;
+            height: 350px;
+            margin: 0 20px 20px 0;
+            border: 1px solid transparent;
+        }
+        #app .list .course:hover{
+            box-shadow:2px 100px 100px rgba(0, 0, 0, .1);
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+        .list .course .poster{
+            width: 90%;
+            height: 60%;
+            padding: 5% 5% 0 5%;
+        }
+        .list .course h4{
+            padding: 0 5%;
+        }
+        .list .course .content{
+            position: relative;
+            padding: 0 5%;
+            padding: 10px 0;
+        }
+        .list .course .content .price{
+            position: absolute;
+            color: red;
+            font-size: 16px;
+            left: 5%;
+        }
+        .list .course .content .free{
+            color: green;
+        }
+        .list .course .content .compnay{
+            position: absolute;
+            right: 5%;
+            color: #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <ul class="list">
+            <li class="course" v-for="itme in courseList">
+                <img :src="itme.poster" :alt="itme.name" class="poster"/>
+                <h4 class="title">{{ itme.name }}</h4>
+                <div class="content">
+                    <div class="price" :class= "{free: itme.free}">{{ itme.free ? '免费' : '￥' + itme.price }}</div>
+                    <div class="compnay">大头教育</div>
+                </div>
+            </li>
+        </ul>
+
+
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                courseList: [
+                    {
+                        name: '高级,高级高级高级高级高级高级高级高级高级高级高级高级高级高级高级高级高级',
+                        free: true,
+                        price: 0,
+                        poster: './images/banner2.jpg'
+                    },
+                    {
+                        name: '中级中级中级中级中级中级中级中级中级中级中级中级中级中级中级中级中级',
+                        free: true,
+                        price: 0,
+                        poster: './images/banner3.jpg'
+                    },
+                    {
+                        name: '低级低级低级低级低级低级低级低级低级低级低级低级低级低级低级',
+                        free: false,
+                        price: 9.9,
+                        poster: './images/banner4.jpg'
+                    },
+                    {
+                        name: '高级',
+                        free: false,
+                        price: 399,
+                        poster: './images/banner2.jpg'
+                    },
+                    {
+                        name: '中级',
+                        free: true,
+                        price: 0,
+                        poster: './images/banner3.jpg'
+                    },
+                    {
+                        name: '低级',
+                        free: true,
+                        price: 0,
+                        poster: './images/banner4.jpg'
+                    },
+
+                ],
+                color: {backgroundColor: 'red'}
+            },
+            methods: {
+
+            },
+        });
+
+
+
+    </script>
+
+</body>
+
+</html>
